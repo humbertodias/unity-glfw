@@ -204,9 +204,14 @@ namespace SK.Libretro.VideoDrivers
         public const int GLFW_OPENGL_CORE_PROFILE   = 0x00032001;
 
         
-
 #pragma warning disable IDE1006 // Naming Styles
-        public const string GLFW_LIB = "libglfw";
+        #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+         const string GLFW_LIB = "libglfw.dylib";
+        #elif UNITY_EDITOR_LINUX || UNITY_STANDALONE_LINUX
+         const string GLFW_LIB = "libglfw";
+        #else
+         const string GLFW_LIB = "glfw3";
+        #endif
         [DllImport(GLFW_LIB, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern IntPtr glfwGetProcAddress([In, MarshalAs(UnmanagedType.LPStr)] string procname);
 
